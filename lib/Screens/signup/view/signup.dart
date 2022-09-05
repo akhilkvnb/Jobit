@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:jobit/Login/login.dart';
-import 'package:jobit/main/screemain.dart';
+import 'package:jobit/Screens/Login/view/login.dart';
+import 'package:jobit/Screens/main/screemain.dart';
+import 'package:jobit/Screens/signup/provider/signup_provider.dart';
 import 'package:jobit/widgets/Elevatedbutton.dart';
 import 'package:jobit/widgets/googlebutton.dart';
 import 'package:jobit/widgets/headertext.dart';
 import 'package:jobit/widgets/textfield.dart';
+import 'package:provider/provider.dart';
 
 class ScreenSignup extends StatelessWidget {
   const ScreenSignup({Key? key}) : super(key: key);
@@ -48,32 +50,63 @@ class ScreenSignup extends StatelessWidget {
                     Center(
                       child: Headertext(title: 'SignUp'),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          left: 16, right: 16, top: 15, bottom: 10),
-                      child: CustomTextField(
-                        text: 'Username',
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          left: 16, right: 16, top: 10, bottom: 10),
-                      child: CustomTextField(
-                        text: 'Email id',
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          left: 16, right: 16, top: 10, bottom: 10),
-                      child: CustomTextField(
-                        text: 'Password',
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          left: 16, right: 16, top: 10, bottom: 10),
-                      child: CustomTextField(
-                        text: 'ConformPassword',
+                    Form(
+                      key: context.watch<SignUpProvider>().formkey,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 15, bottom: 10),
+                            child: CustomTextField(
+                              controller: context
+                                  .watch<SignUpProvider>()
+                                  .usernameController,
+                              validator: (value) => context
+                                  .read<SignUpProvider>()
+                                  .validatorUsername(value!),
+                              text: 'Username',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 10, bottom: 10),
+                            child: CustomTextField(
+                              controller: context
+                                  .watch<SignUpProvider>()
+                                  .emailController,
+                              validator: (value) => context
+                                  .read<SignUpProvider>()
+                                  .validatorEmail(value!),
+                              text: 'Email id',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 10, bottom: 10),
+                            child: CustomTextField(
+                              controller: context
+                                  .watch<SignUpProvider>()
+                                  .passworController,
+                              validator: (value) => context
+                                  .read<SignUpProvider>()
+                                  .validatorPassword(value!),
+                              text: 'Password',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 10, bottom: 10),
+                            child: CustomTextField(
+                              controller: context
+                                  .watch<SignUpProvider>()
+                                  .conformpasswordController,
+                              validator: (value) => context
+                                  .read<SignUpProvider>()
+                                  .validatorConformPassword(value!),
+                              text: 'ConformPassword',
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Padding(
@@ -82,8 +115,9 @@ class ScreenSignup extends StatelessWidget {
                       child: CustomElevatedButtom(
                         buttonname: 'SignUp',
                         onpressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (cxt) => const ScreenMain()));
+                          context
+                              .read<SignUpProvider>()
+                              .signupValidation(context);
                         },
                       ),
                     ),

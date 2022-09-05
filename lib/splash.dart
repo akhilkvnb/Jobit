@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobit/Login/login.dart';
+import 'package:jobit/Screens/Login/view/login.dart';
 
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     await Future.delayed(const Duration(seconds: 3));
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (ctx) => const ScreenLogin(),
+        builder: (ctx) => ScreenLogin(),
       ),
     );
   }

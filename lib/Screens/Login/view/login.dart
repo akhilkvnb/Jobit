@@ -1,11 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:jobit/main/screemain.dart';
-import 'package:jobit/signup/signup.dart';
+import 'package:jobit/Screens/Login/provider/login_provider.dart';
+import 'package:jobit/Screens/signup/view/signup.dart';
 import 'package:jobit/widgets/Elevatedbutton.dart';
 import 'package:jobit/widgets/googlebutton.dart';
 import 'package:jobit/widgets/headertext.dart';
 import 'package:jobit/widgets/textfield.dart';
+import 'package:provider/provider.dart';
 
 class ScreenLogin extends StatelessWidget {
   const ScreenLogin({Key? key}) : super(key: key);
@@ -32,13 +33,35 @@ class ScreenLogin extends StatelessWidget {
                     child: Headertext(title: 'Login'),
                   ),
                 ),
-                const Padding(
-                    padding: EdgeInsets.only(
-                        left: 16, right: 16, top: 10, bottom: 10),
-                    child: CustomTextField(text: 'Email id')),
-                const Padding(
-                    padding: EdgeInsets.only(left: 16, right: 16, bottom: 5),
-                    child: CustomTextField(text: 'Password')),
+                Form(
+                  key: context.watch<SigninProvider>().formkey,
+                  child: Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, top: 10, bottom: 10),
+                          child: CustomTextField(
+                              controller: context
+                                  .watch<SigninProvider>()
+                                  .emailController,
+                              validator: (value) => context
+                                  .read<SigninProvider>()
+                                  .validatorEmail(value!),
+                              text: 'Email id')),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 5),
+                          child: CustomTextField(
+                              controller: context
+                                  .watch<SigninProvider>()
+                                  .passworController,
+                              validator: (value) => context
+                                  .read<SigninProvider>()
+                                  .validatorPassword(value!),
+                              text: 'Password')),
+                    ],
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(right: 20, top: 8, bottom: 8),
                   child: Align(
@@ -57,14 +80,13 @@ class ScreenLogin extends StatelessWidget {
                   child: CustomElevatedButtom(
                     buttonname: 'Login',
                     onpressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (cxt) => const ScreenMain()));
+                      context.read<SigninProvider>().signinValidation(context);
                     },
                   ),
                 ),
                 const Center(child: Text('-or-')),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, top: 6),
+                const Padding(
+                  padding: EdgeInsets.only(left: 16, right: 16, top: 6),
                   child: GoogleButton(),
                 ),
                 Padding(
