@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jobit/Screens/profile/view/cvscreen.dart';
 
-class ProfileContainer extends StatelessWidget {
-  ProfileContainer({Key? key, this.heading}) : super(key: key);
+class Cv extends StatelessWidget {
+  Cv({Key? key, this.heading}) : super(key: key);
   String? heading;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,12 @@ class ProfileContainer extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 11, 6, 26)),
           ),
-          subtitle: Text(''),
+          subtitle: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => ScreenCv()));
+              },
+              child: const Text('SEE CV')),
         ),
       ),
     );

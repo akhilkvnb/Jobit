@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jobit/Screens/description.dart';
-import 'package:jobit/Screens/profile.dart';
+import 'package:jobit/Screens/profile/view/profile.dart';
 import 'package:jobit/search.dart';
 import 'package:jobit/widgets/headertext.dart';
 import 'package:jobit/widgets/slider.dart';
@@ -25,7 +25,7 @@ class ScreenJobs extends StatelessWidget {
                     child: IconButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (cxt) => const ScreenProfile()));
+                              builder: (cxt) => ScreenProfile()));
                         },
                         icon: const Icon(
                           Icons.person,

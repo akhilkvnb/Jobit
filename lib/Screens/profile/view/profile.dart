@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jobit/Screens/edit.dart';
+import 'package:jobit/Screens/profile/provider/provider.dart';
+import 'package:jobit/Screens/profile/view/edit.dart';
 import 'package:jobit/widgets/profilecontainer.dart';
+import 'package:jobit/widgets/profilecv.dart';
+import 'package:provider/provider.dart';
 
 class ScreenProfile extends StatelessWidget {
-  const ScreenProfile({Key? key}) : super(key: key);
-
+  ScreenProfile({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,20 +41,31 @@ class ScreenProfile extends StatelessWidget {
                       child:
                           Icon(Icons.camera_alt_outlined, color: Colors.white),
                     ))),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: CircleAvatar(
-                backgroundColor: Colors.yellow,
-                radius: 60,
-                backgroundImage: AssetImage('asset/abc.jpg'),
-              ),
-            ),
+            Consumer<ProfileProvider>(builder: (context, value, child) {
+              return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: value.imageFile == null
+                      ? const CircleAvatar(
+                          backgroundColor: Colors.yellow,
+                          radius: 60,
+                          backgroundImage: AssetImage('asset/abc.jpg'),
+                        )
+                      : CircleAvatar(
+                          backgroundColor: Colors.green,
+                          radius: 60,
+                          backgroundImage: FileImage(
+                              File(value.imageFile!.path),
+                              scale: 1.0),
+                        ));
+            }),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(left: 90),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      context.read<ProfileProvider>().pickimage();
+                    },
                     icon: const CircleAvatar(
                       backgroundColor: Colors.black,
                       child:
@@ -63,33 +77,44 @@ class ScreenProfile extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: IconButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (cxt) => const ScreenEdit()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (cxt) => ScreenEdit()));
                     },
                     icon: const Icon(Icons.edit)))
           ])),
       Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Text('name',
+        padding: const EdgeInsets.all(8.0),
+
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Name',
                 style: GoogleFonts.electrolize(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: const Color.fromARGB(255, 11, 6, 26))),
-          )),
+            const SizedBox(width: 5),
+            Text('',
+                style: GoogleFonts.electrolize(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 11, 6, 26))),
+          ],
+        ),
+        // ),
+      ),
       const SizedBox(height: 20),
       Padding(
           padding: const EdgeInsets.only(left: 6, right: 6),
-          child: ProfileContainer(heading: 'Education')),
+          child: ProfileContainer(heading: 'About')),
       const SizedBox(height: 5),
       Padding(
           padding: const EdgeInsets.only(left: 6, right: 6),
-          child: ProfileContainer(heading: 'Experience')),
+          child: Cv(heading: 'CV')),
       const SizedBox(height: 5),
       Padding(
           padding: const EdgeInsets.only(left: 6, right: 6),
-          child: ProfileContainer(heading: 'Contact'))
+          child: ProfileContainer(heading: 'Date of Birth'))
     ]));
   }
 }

@@ -1,12 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jobit/Screens/Login/model/login_model.dart';
-import 'package:jobit/Screens/jobs.dart';
-import 'package:jobit/api_url/api_url.dart';
-import 'package:jobit/services/api_service.dart';
+import 'package:jobit/Screens/main/screemain.dart';
+import 'package:jobit/services/api_signin.dart';
+import 'package:jobit/utilitty/utility.dart';
 
 class SigninProvider with ChangeNotifier {
-  final formkey = GlobalKey<FormState>();
+  final loginformkey = GlobalKey<FormState>();
+  // GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passworController = TextEditingController();
 
@@ -33,7 +34,7 @@ class SigninProvider with ChangeNotifier {
   }
 
   signinValidation(BuildContext context) {
-    if (formkey.currentState!.validate() == false) {
+    if (loginformkey.currentState!.validate() == false) {
       return;
     } else {
       signinFunction(context);
@@ -42,23 +43,21 @@ class SigninProvider with ChangeNotifier {
 
   ///--------------SignInFunction-----------------////
   signinFunction(BuildContext context) async {
-    final resp = await Apiservice().signinPostFunction(
-        SigninModel(
-            username: emailController.text.trim(),
-            password: passworController.text.trim(),
-            grantType: 'password',
-            clientId: ApiUrl.clientId,
-            clientSecret: ApiUrl.clientSecret),
-        context);
-    if (resp is Response) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const ScreenJobs()));
-    } else if (resp == 'network Error') {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(resp.toString())));
-    } else if (resp == 'Invalid email or password') {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(resp.toString())));
-    }
+    final signinData = SigninModel(
+      email: emailController.text.trim(),
+      password: passworController.text.trim(),
+    );
+    notifyListeners();
+    ApisignIn().signinPostFunction(signinData, context).then((response) {
+      notifyListeners();
+      if (response.accessToken != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const ScreenMain()));
+      } else if (response.message != null) {
+        Utility.displaySnackbar(context: context, msg: response.message!);
+      } else {
+        Utility.displaySnackbar(context: context, msg: "No internet");
+      }
+    });
   }
 }

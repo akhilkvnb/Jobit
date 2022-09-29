@@ -1,11 +1,20 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:jobit/Screens/jobs.dart';
+import 'package:jobit/Screens/Login/view/login.dart';
+import 'package:jobit/Screens/home/view/jobs.dart';
+import 'package:jobit/Screens/main/screemain.dart';
 import 'package:jobit/Screens/signup/models/model.dart';
-import 'package:jobit/services/api_service.dart';
+import 'package:jobit/Screens/signup/models/signup_responsemo.dart';
+import 'package:jobit/services/api_signup.dart';
+import 'package:jobit/utilitty/utility.dart';
 
 class SignUpProvider with ChangeNotifier {
-  final formkey = GlobalKey<FormState>();
+  bool isloading = false;
+  final signupformkey = GlobalKey<FormState>();
+  // GlobalKey<FormState> signupkey = GlobalKey<FormState>();
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passworController = TextEditingController();
@@ -55,7 +64,7 @@ class SignUpProvider with ChangeNotifier {
   }
 
   signupValidation(BuildContext context) {
-    if (formkey.currentState!.validate() == false) {
+    if (signupformkey.currentState!.validate() == false) {
       return;
     } else {
       signupFunction(context);
@@ -65,25 +74,39 @@ class SignUpProvider with ChangeNotifier {
   ////-----------------Signup function-------------------////
 
   signupFunction(context) async {
-    final res = await Apiservice().signupPostFunction(SignupModel(
+    final signupData = SignupModel(
         username: usernameController.text.trim(),
         emailid: emailController.text.trim(),
-        password: passworController.text.trim()));
-    if (res is Response) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const ScreenJobs()));
-    } else if (res == 'email Already Exist') {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(res.toString())));
-    } else if (res == 'username Already Exist') {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(res.toString())));
-    } else if (res == 'network Error') {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(res.toString())));
-    } else if (res == 'error') {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Something went wrong ! Please try again later')));
+        password: passworController.text.trim());
+    isloading = true;
+    SignUpResponseModel? response =
+        await Apiservice().signupPostFunction(signupData);
+    if (response != null) {
+      isloading = false;
+      notifyListeners();
+      if (response.email != null) {
+        log('f........f');
+        showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+                  title: Text('message'),
+                  actions: [
+                    Text('Succefully registered'),
+                    // Text('Now complete your mail verification')
+                  ],
+                ));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const ScreenLogin()));
+      } else {
+        // log('log7');
+        Utility.displaySnackbar(
+            context: context, msg: response.message ?? 'Something went wrong!');
+      }
+    } else {
+      isloading = false;
+      notifyListeners();
+      log('g........g');
+      Utility.displaySnackbar(context: context, msg: 'No network found!');
     }
   }
 }

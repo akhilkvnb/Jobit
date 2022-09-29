@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jobit/Screens/blog.dart';
+import 'package:jobit/Screens/blog/provider/provider.dart';
 import 'package:jobit/widgets/Elevatedbutton.dart';
+import 'package:provider/provider.dart';
 
 class ScreenAddBlog extends StatelessWidget {
   const ScreenAddBlog({Key? key}) : super(key: key);
@@ -23,23 +24,26 @@ class ScreenAddBlog extends StatelessWidget {
                 children: [
                   const SizedBox(height: 40),
                   TextFormField(
+                      controller: context.read<BlogProvider>().titleController,
                       decoration: InputDecoration(
-                    hintText: 'Title',
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                    fillColor: Colors.white,
-                    filled: true,
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                        borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 11, 6, 26))),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                      borderSide: const BorderSide(),
-                    ),
-                  )),
+                        hintText: 'Title',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 10),
+                        fillColor: Colors.white,
+                        filled: true,
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 11, 6, 26))),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: const BorderSide(),
+                        ),
+                      )),
                   const SizedBox(height: 20),
                   TextFormField(
+                      controller:
+                          context.read<BlogProvider>().contentController,
                       maxLines: 15,
                       minLines: 5,
                       decoration: InputDecoration(
@@ -63,8 +67,8 @@ class ScreenAddBlog extends StatelessWidget {
               width: double.infinity,
               child: CustomElevatedButtom(
                   buttonname: 'Save',
-                  onpressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ScreenBlog()))),
+                  onpressed: () =>
+                      context.read<BlogProvider>().blogadd(context)),
             ),
             const SizedBox(height: 16)
           ],

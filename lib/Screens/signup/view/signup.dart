@@ -51,7 +51,7 @@ class ScreenSignup extends StatelessWidget {
                       child: Headertext(title: 'SignUp'),
                     ),
                     Form(
-                      key: context.watch<SignUpProvider>().formkey,
+                      key: context.watch<SignUpProvider>().signupformkey,
                       child: Column(
                         children: [
                           Padding(
@@ -139,7 +139,7 @@ class ScreenSignup extends StatelessWidget {
                                 text: 'Login',
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => {
-                                        Navigator.of(context).push(
+                                        Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     const ScreenLogin()))

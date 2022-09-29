@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Edittitle extends StatelessWidget {
-  Edittitle({Key? key, this.title}) : super(key: key);
+  Edittitle({
+    Key? key,
+    this.title,
+  }) : super(key: key);
   String? title;
+
   @override
   Widget build(BuildContext context) {
     return Padding(

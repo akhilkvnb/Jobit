@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jobit/Screens/profile.dart';
 import 'package:jobit/widgets/headertext.dart';
+import 'Screens/profile/view/profile.dart';
 
 class ScreenSearch extends StatelessWidget {
   const ScreenSearch({Key? key}) : super(key: key);
@@ -27,8 +27,8 @@ class ScreenSearch extends StatelessWidget {
               radius: 22,
               child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (cxt) => const ScreenProfile()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (cxt) => ScreenProfile()));
                   },
                   icon: const Icon(
                     Icons.person,
