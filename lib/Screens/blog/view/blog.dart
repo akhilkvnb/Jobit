@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jobit/Screens/blog/model/getmodel.dart';
@@ -31,8 +29,19 @@ class ScreenBlog extends StatelessWidget {
         ],
       ),
       body: FutureBuilder<List<BlogGetModel>?>(
-        future: context.read<BlogProvider>().getListBlogs(),
+        future: context.watch<BlogProvider>().getListBlogs(),
         builder: (context, snapshot) {
+          // if (snapshot.hasError) {
+          //   return Column(
+          //     children: [
+          //       Center(child: Image.asset('asset/error.jpg')),
+          //       Text(
+          //         snapshot.error.toString(),
+          //         style: const TextStyle(fontSize: 20),
+          //       )
+          //     ],
+          //   );
+          // }
           if (snapshot.hasData &&
               snapshot.connectionState == ConnectionState.done) {
             return ListView.builder(

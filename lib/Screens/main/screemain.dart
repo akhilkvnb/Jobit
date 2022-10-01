@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jobit/Screens/blog/view/blog.dart';
 import 'package:jobit/Screens/home/view/jobs.dart';
 import 'package:jobit/Screens/message.dart';
-import 'package:jobit/Screens/settings.dart';
+import 'package:jobit/Screens/settings/view/settings.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 
 class ScreenMain extends StatefulWidget {

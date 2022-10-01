@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:jobit/Screens/profile/model/promodel.dart';
+import 'package:jobit/Screens/profile/view/profile.dart';
 import 'package:jobit/services/api_profilepost.dart';
 import 'package:jobit/utilitty/utility.dart';
+import '../model/profilegetmodel.dart';
 
 class ProfileProvider with ChangeNotifier {
   TextEditingController firstnameController = TextEditingController();
@@ -13,7 +15,7 @@ class ProfileProvider with ChangeNotifier {
   TextEditingController aboutController = TextEditingController();
   File? imageFile;
   File? cvFile;
-  ProfileModel? profiledetails;
+  // ProfileModel? profiledetails;
 
 ///////////----------------ProfilePost---------------//////////////
 
@@ -26,13 +28,25 @@ class ProfileProvider with ChangeNotifier {
       cv: imageFile!,
       about: aboutController.text,
     );
-    log('lllllllllllllll');
-    ProfileModel? response =
-        await Createprofile().profilepostfunction(profileData, context);
+    log('lllllllllllllll99999');
+    ProfileModel? response = await Createprofile().profilepostfunction(
+      profileData,
+    );
     if (response != null) {
-      if (response.lastname != null) {
+      log('ppp');
+
+      if (response.message == 'success') {
         log('hiiiiiii');
-        profiledetails = response;
+        Utility.displaySnackbar(
+            context: context, msg: "Profile added Successfully");
+        getProfileList();
+        log('3we3');
+        // Navigator.of(context).pop();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ScreenProfile()));
+        notifyListeners();
+        // profiledetails = response;
+
       } else {
         Utility.displaySnackbar(context: context, msg: response.message!);
       }
@@ -65,9 +79,12 @@ class ProfileProvider with ChangeNotifier {
 
 //////----------------ProfileRead-------------------////////
 
-  Future<List<ProfileModel>?> getProfileList() async {
-    final response = await ;
+  Future<ProfileGetModel?> getProfileList() async {
+    final response = await Createprofile().getProfile();
     if (response != null) {
+      if (response.message != null) {
+        throw response.message!;
+      }
       return response;
     }
     return null;

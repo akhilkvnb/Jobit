@@ -1,10 +1,6 @@
 import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jobit/Screens/Login/view/login.dart';
-import 'package:jobit/Screens/home/view/jobs.dart';
-import 'package:jobit/Screens/main/screemain.dart';
 import 'package:jobit/Screens/signup/models/model.dart';
 import 'package:jobit/Screens/signup/models/signup_responsemo.dart';
 import 'package:jobit/services/api_signup.dart';

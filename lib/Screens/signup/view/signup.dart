@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jobit/Screens/Login/view/login.dart';
-import 'package:jobit/Screens/main/screemain.dart';
 import 'package:jobit/Screens/signup/provider/signup_provider.dart';
 import 'package:jobit/widgets/Elevatedbutton.dart';
 import 'package:jobit/widgets/googlebutton.dart';

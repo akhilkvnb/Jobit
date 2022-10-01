@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileContainer extends StatelessWidget {
-  ProfileContainer({Key? key, this.heading}) : super(key: key);
+  ProfileContainer({Key? key, this.heading, this.content}) : super(key: key);
   String? heading;
+  String? content;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +32,7 @@ class ProfileContainer extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 11, 6, 26)),
           ),
-          subtitle: Text(''),
+          subtitle: Text(content!),
         ),
       ),
     );

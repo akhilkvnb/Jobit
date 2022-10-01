@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jobit/Screens/Login/view/login.dart';
-import 'package:jobit/signout/signoutprovi.dart';
-import 'package:jobit/utilitty/utility.dart';
 import 'package:jobit/widgets/settingstile.dart';
 import 'package:provider/provider.dart';
+import '../provider/signoutprovi.dart';
 
 class ScreenSettings extends StatelessWidget {
   const ScreenSettings({Key? key}) : super(key: key);

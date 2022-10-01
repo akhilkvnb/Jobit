@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class EdtTextField extends StatelessWidget {
-  EdtTextField({Key? key, this.title, required this.controller})
+  EdtTextField({Key? key, this.title, required this.controller1})
       : super(key: key);
   String? title;
-  TextEditingController controller;
+  TextEditingController controller1;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         child: TextFormField(
-          controller: controller,
+          controller: controller1,
           decoration: InputDecoration(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 10, vertical: 0),

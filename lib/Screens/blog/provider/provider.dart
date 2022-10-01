@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:jobit/Screens/blog/model/getmodel.dart';
 import 'package:jobit/Screens/blog/model/model.dart';
-import 'package:jobit/Screens/blog/view/blog.dart';
 import 'package:jobit/services/api_blog.dart';
 import 'package:jobit/utilitty/utility.dart';
 
@@ -30,6 +29,7 @@ class BlogProvider with ChangeNotifier {
             context: context, msg: "Blog added Successfully");
         getListBlogs();
         Navigator.of(context).pop();
+        notifyListeners();
       } else {
         Utility.displaySnackbar(
             context: context, msg: response.message ?? "something went wrong!");

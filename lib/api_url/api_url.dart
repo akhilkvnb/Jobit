@@ -6,4 +6,7 @@ class ApiUrl {
   static const profileRead = '/auth1/currentuser/';
   static const blogPost = '/blog/posts/';
   static const blogRead = '/blog/posts/';
+  static const jobcategory = '/jobs/category/';
+  static const jobPost = '/jobs/jobposting/';
+  static const jobRead = '/jobs/jobposting/';
 }

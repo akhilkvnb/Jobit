@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jobit/Screens/description.dart';
+import 'package:jobit/Screens/home/view/addjob.dart';
+import 'package:jobit/Screens/profile/model/profilegetmodel.dart';
 import 'package:jobit/Screens/profile/view/profile.dart';
 import 'package:jobit/search.dart';
 import 'package:jobit/widgets/headertext.dart';
 import 'package:jobit/widgets/slider.dart';
+
+import '../../profile/view/edit.dart';
 
 class ScreenJobs extends StatelessWidget {
   const ScreenJobs({Key? key}) : super(key: key);
@@ -24,8 +28,10 @@ class ScreenJobs extends StatelessWidget {
                     radius: 22,
                     child: IconButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (cxt) => ScreenProfile()));
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (cxt) => ScreenEdit()
+                                  //  ScreenProfile()
+                                  ));
                         },
                         icon: const Icon(
                           Icons.person,
@@ -99,15 +105,30 @@ class ScreenJobs extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Jobs',
-                          style: GoogleFonts.electrolize(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 11, 6, 26)),
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Jobs',
+                            style: GoogleFonts.electrolize(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromARGB(255, 11, 6, 26)),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ScreenAddJob()));
+                            },
+                            child: Text(
+                              'Add jobs',
+                              style: GoogleFonts.electrolize(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     ListView.builder(

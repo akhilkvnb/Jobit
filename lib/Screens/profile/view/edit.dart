@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:jobit/Screens/profile/provider/provider.dart';
 import 'package:jobit/widgets/edittextfield.dart';
@@ -55,27 +54,30 @@ class ScreenEdit extends StatelessWidget {
                           onPressed: () async {
                             context.read<ProfileProvider>().pickimage();
                           },
-                          icon: Icon(Icons.camera)),
+                          icon: const Icon(Icons.camera)),
                     )
                   ],
                 ),
                 Edittitle(title: 'Firstname'),
                 EdtTextField(
                   title: 'Firstname',
-                  controller:
+                  controller1:
                       context.watch<ProfileProvider>().firstnameController,
                 ),
                 Edittitle(title: 'Lastname'),
                 EdtTextField(
                   title: 'Lastname',
-                  controller:
+                  controller1:
                       context.watch<ProfileProvider>().lastnameController,
                 ),
                 Edittitle(title: 'Date of Birth'),
                 // EdtTextField(
                 //   title: 'Date of Birth',
                 // ),
-                TextFormField(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(),
+                ),
                 // Edittitle(title: 'Experience'),
                 // EdtTextField(title: 'Experience'),
                 // Edittitle(title: 'Education'),
@@ -85,7 +87,7 @@ class ScreenEdit extends StatelessWidget {
                 Edittitle(title: 'About'),
                 EdtTextField(
                   title: 'About',
-                  controller: context.watch<ProfileProvider>().aboutController,
+                  controller1: context.watch<ProfileProvider>().aboutController,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 60, right: 60),
@@ -93,7 +95,7 @@ class ScreenEdit extends StatelessWidget {
                       onPressed: () {
                         context.read<ProfileProvider>().pickimage();
                       },
-                      child: Text('CV')),
+                      child: const Text('CV')),
                 ),
                 const SizedBox(
                   height: 150,
